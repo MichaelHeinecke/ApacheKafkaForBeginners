@@ -1,4 +1,4 @@
-package com.udemy.apachesparkforbeginners;
+package com.udemy.apachesparkforbeginners.demo;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -19,10 +19,10 @@ public class ProducerDemo {
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         // create producer
-        KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
+        KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
         // create producer record
-        ProducerRecord<String, String> record = new ProducerRecord<String, String>("first_topic", "Hello world!");
+        ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", "Hello world!");
 
         // send data
         producer.send(record);

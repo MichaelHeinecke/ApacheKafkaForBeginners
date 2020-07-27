@@ -1,4 +1,4 @@
-package com.udemy.apachesparkforbeginners;
+package com.udemy.apachesparkforbeginners.demo;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -23,7 +23,7 @@ public class ConsumerDemoWithThreads {
         new ConsumerDemoWithThreads().run();
     }
 
-    private void run() throws InterruptedException {
+    private void run() {
         final Logger logger = LoggerFactory.getLogger(ConsumerDemoWithThreads.class);
 
         String bootstrapServers = "localhost:9092";
@@ -81,7 +81,7 @@ public class ConsumerDemoWithThreads {
             properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
             // create consumer
-            consumer = new KafkaConsumer<String, String>(properties);
+            consumer = new KafkaConsumer<>(properties);
 
             // subscribe consumer to topic(s)
             consumer.subscribe(Collections.singleton(topic));

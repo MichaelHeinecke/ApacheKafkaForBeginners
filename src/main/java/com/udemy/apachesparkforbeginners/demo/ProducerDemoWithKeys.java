@@ -1,4 +1,4 @@
-package com.udemy.apachesparkforbeginners;
+package com.udemy.apachesparkforbeginners.demo;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -21,7 +21,7 @@ public class ProducerDemoWithKeys {
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         // create producer
-        KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
+        KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
         // send data
         for (int i = 0; i < 20; i++) {
@@ -31,22 +31,20 @@ public class ProducerDemoWithKeys {
             String key = "id_" + i;
 
             // create producer record
-            ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
+            ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, value);
 
             // send record with callback
-            producer.send(record, new Callback() {
-                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-                    // is executed every time a record is successfully sent or an exception is thrown
-                    if (e == null) {
-                        // record was sent successfully
-                        logger.info("Received new metadata: \n" +
-                                "Topic: " + recordMetadata.topic() + "\n" +
-                                "Partition: " + recordMetadata.partition() + "\n" +
-                                "Offset: " + recordMetadata.offset() + "\n" +
-                                "Timestamp: " + recordMetadata.timestamp());
-                    } else {
-                        logger.error("Error while producing", e);
-                    }
+            producer.send(record, (recordMetadata, e) -> {
+                // is executed every time a record is successfully sent or an exception is thrown
+                if (e == null) {
+                    // record was sent successfully
+                    logger.info("Received new metadata: \n" +
+                            "Topic: " + recordMetadata.topic() + "\n" +
+                            "Partition: " + recordMetadata.partition() + "\n" +
+                            "Offset: " + recordMetadata.offset() + "\n" +
+                            "Timestamp: " + recordMetadata.timestamp());
+                } else {
+                    logger.error("Error while producing", e);
                 }
             });
 
