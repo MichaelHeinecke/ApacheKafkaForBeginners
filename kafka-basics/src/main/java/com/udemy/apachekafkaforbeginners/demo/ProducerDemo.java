@@ -1,4 +1,4 @@
-package com.udemy.apachesparkforbeginners.demo;
+package com.udemy.apachekafkaforbeginners.demo;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
